@@ -45,20 +45,29 @@ public class CameraController : MonoBehaviour
     {
         if (target)
         {
-            x += Input.GetAxis("Mouse X") * xSpeed * 0.02f;    //take mouse inputs
-            y -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;    //
+            //x += Input.GetAxis("Mouse X") * xSpeed * 0.02f;    //take mouse inputs
+            //y -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;    //
+
+            if (Input.GetKey(KeyCode.LeftArrow))                 //
+                x += -1 * xSpeed * 0.02f;                        //
+            if (Input.GetKey(KeyCode.RightArrow))                // take arrow key inputs
+                x += 1 * xSpeed * 0.02f;                         // to orbit the camera around the player
+            if (Input.GetKey(KeyCode.UpArrow))                   //
+                y += 1 * xSpeed * 0.02f;                         //
+            if (Input.GetKey(KeyCode.DownArrow))                 //
+                y += -1 * xSpeed * 0.02f;                        //
 
             y = ClampAngle(y, yMinLimit, yMaxLimit);           // stop camera from going outside the limits
 
-            Quaternion rotation = Quaternion.Euler(y, x, 0);
+            Quaternion rotation = Quaternion.Euler(y, x, 0);                                                      // Important Maths
+            distance = Mathf.Clamp(distance - Input.GetAxis("Mouse ScrollWheel") * 5, distanceMin, distanceMax);  // No touch!
 
-            distance = Mathf.Clamp(distance - Input.GetAxis("Mouse ScrollWheel") * 5, distanceMin, distanceMax);
+            RaycastHit hit;                                                     // if the camera's line of sight to the player is broken
+            if (Physics.Linecast(target.position, transform.position, out hit)) // or if the camera hits a wall, the camera will no clip 
+            {                                                                   // and instead will jump forward until the player can be seen
+                distance = hit.distance;                                        //
+            }                                                                   //this should stop camera clipping through terrain
 
-            /*RaycastHit hit;
-            if (Physics.Linecast(target.position, transform.position, out hit))
-            {
-                distance -= hit.distance;
-            }*/
             Vector3 negDistance = new Vector3(0.0f, 0.0f, -distance);
             Vector3 position = rotation * negDistance + target.position;
 
@@ -69,11 +78,11 @@ public class CameraController : MonoBehaviour
 
     public static float ClampAngle(float angle, float min, float max)
     {
-        if (angle < -360F)
-            angle += 360F;
-        if (angle > 360F)
-            angle -= 360F;
-        return Mathf.Clamp(angle, min, max);
+        if (angle < -360F)                       //
+            angle += 360F;                       // stops camera amgle from shifting outside
+        if (angle > 360F)                        // of min and max bounds
+            angle -= 360F;                       //
+        return Mathf.Clamp(angle, min, max);     //
     }
 }
 
