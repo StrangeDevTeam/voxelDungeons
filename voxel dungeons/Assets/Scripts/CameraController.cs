@@ -4,27 +4,76 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    /*  camera orbit code taken from:
+     *  https://wiki.unity3d.com/index.php/MouseOrbitImproved#Code_C.23
+     */
+    
 
-    public GameObject cameraTarget; //This is the target that the camera will rotate and move around
-    public float rotationSpeed = 1.0f; //Used to controll the speed of camera rotaion on the arrow keys
+    public Transform target; // the object/entity the camera will orbit around
+    public float distance = 5.0f; //the default/starting orbital distance from the target
+    public float xSpeed = 180.0f; //sensitivity on x axis, default 120
+    public float ySpeed = 180.0f; //sensitivity on y axis, default 120
 
-    // Start is called before the first frame update
+    public float yMinLimit = -10f; // the lower camera angle limit to stop camera from clipping through the ground as much
+    public float yMaxLimit = 80f; // the upper camera angle limit to stop camera looping round and becoming inverted
+
+    public float distanceMin = 3f; // the minimum distance the camera can zoom in to view the character
+    public float distanceMax = 15f; // the maximum distrance the camera may zoom out from the character
+
+    private Rigidbody rigidbody; // declared in Start()
+
+    float x = 0.0f; // the coordinates of the camera
+    float y = 0.0f; //
+
+    // Use this for initialization
     void Start()
     {
+        Vector3 angles = transform.eulerAngles;
+        x = angles.y;
+        y = angles.x;
+
+        rigidbody = GetComponent<Rigidbody>();
+
         
+        if (rigidbody != null)               //
+        {                                    // Make the rigid body not change rotation
+            rigidbody.freezeRotation = true; //
+        }                                    //
     }
 
-    // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        if (Input.GetKey(KeyCode.LeftArrow))                                         //
-            cameraTarget.transform.Rotate(new Vector3(0.0f, rotationSpeed, 0.0f));   // Rotate the camera target
-        if (Input.GetKey(KeyCode.RightArrow))                                        // based on arrow keys
-            cameraTarget.transform.Rotate(new Vector3(0.0f, -rotationSpeed, 0.0f));  //
-        if (Input.GetKey(KeyCode.UpArrow))                                           // Camera is a child of cameraTarget
-            cameraTarget.transform.Rotate(new Vector3(rotationSpeed, 0.0f, 0.0f));   // so doing this rotates the camera around the camera Target
-        if (Input.GetKey(KeyCode.DownArrow))                                         //
-            cameraTarget.transform.Rotate(new Vector3(-rotationSpeed, 0.0f, 0.0f));  //
+        if (target)
+        {
+            x += Input.GetAxis("Mouse X") * xSpeed * 0.02f;    //take mouse inputs
+            y -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;    //
 
+            y = ClampAngle(y, yMinLimit, yMaxLimit);           // stop camera from going outside the limits
+
+            Quaternion rotation = Quaternion.Euler(y, x, 0);
+
+            distance = Mathf.Clamp(distance - Input.GetAxis("Mouse ScrollWheel") * 5, distanceMin, distanceMax);
+
+            /*RaycastHit hit;
+            if (Physics.Linecast(target.position, transform.position, out hit))
+            {
+                distance -= hit.distance;
+            }*/
+            Vector3 negDistance = new Vector3(0.0f, 0.0f, -distance);
+            Vector3 position = rotation * negDistance + target.position;
+
+            transform.rotation = rotation;
+            transform.position = position;
+        }
+    }
+
+    public static float ClampAngle(float angle, float min, float max)
+    {
+        if (angle < -360F)
+            angle += 360F;
+        if (angle > 360F)
+            angle -= 360F;
+        return Mathf.Clamp(angle, min, max);
     }
 }
+
