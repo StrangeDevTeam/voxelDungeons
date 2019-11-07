@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
             RaycastHit hit = new RaycastHit();                            //of where the player clicked
 
             if (Physics.Raycast(ray, out hit))                            //if the user clicked an object with a collider
-                agent.destination = hit.transform.position;               //use path finding to move the player to the coirdinates
+                agent.destination = hit.point;                            //use path finding to move the player to the coirdinates
         }
     }
 }
