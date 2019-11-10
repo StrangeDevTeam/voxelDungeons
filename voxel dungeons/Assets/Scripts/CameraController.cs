@@ -45,20 +45,11 @@ public class CameraController : MonoBehaviour
     {
         if (target)
         {
-            if (!UIController.isCursorVisible)
-            {
+            if (!UIController.isCursorVisible)                     // if the player isnt navvigating through menus
+            {                                                      //
                 x += Input.GetAxis("Mouse X") * xSpeed * 0.02f;    //take mouse inputs
                 y -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;    //
             }
-
-          //  if (Input.GetKey(KeyCode.LeftArrow))                 //
-          //      x += -1 * xSpeed * 0.02f;                        //
-          //  if (Input.GetKey(KeyCode.RightArrow))                // take arrow key inputs
-          //      x += 1 * xSpeed * 0.02f;                         // to orbit the camera around the player
-          //  if (Input.GetKey(KeyCode.UpArrow))                   //
-          //      y += 1 * xSpeed * 0.02f;                         //
-          //  if (Input.GetKey(KeyCode.DownArrow))                 //
-          //      y += -1 * xSpeed * 0.02f;                        //
 
             y = ClampAngle(y, yMinLimit, yMaxLimit);           // stop camera from going outside the limits
 
@@ -67,14 +58,13 @@ public class CameraController : MonoBehaviour
 
             RaycastHit hit;                                                     // if the camera's line of sight to the player is broken
             if (Physics.Linecast(target.position, transform.position, out hit)) // or if the camera hits a wall, the camera will not clip 
-            {   
-                if(hit.collider.gameObject.name != "Player")
-                {
-                    
-                    distance = hit.distance;                                        
-                    Debug.Log(hit.collider);
-                }                                                               // and instead will jump forward until the player can be seen
-            }                                                                   //this should stop camera clipping through terrain
+            {                                                                   //
+                if(hit.collider.gameObject.name != "Player")                    // and instead will jump forward until the player can be seen
+                {                                                               // this should stop camera clipping through terrain
+                                                                                // provided that the gameobject blocking line of sight isnt
+                    distance = hit.distance;                                    // the player itself
+                }                                                               //
+            }                                                                   
 
             Vector3 negDistance = new Vector3(0.0f, 0.0f, -distance);
             Vector3 position = rotation * negDistance + target.position;
