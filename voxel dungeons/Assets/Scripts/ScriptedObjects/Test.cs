@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
+    public void Nearby()
+    {
+        //Debug.Log("You are nearby a White Cube");
+    }
     public void Use()
     {
-        Debug.Log("there is a white cube");
+        Debug.Log("You have used the white cube");
     }
 }

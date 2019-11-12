@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         cc = GetComponent<CharacterController>();
+        
     }
 
     // Update is called once per frame
