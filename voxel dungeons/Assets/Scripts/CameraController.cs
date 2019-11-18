@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviour
      */
     
 
-    public Transform target; // the object/entity the camera will orbit around
+    public Transform target; // the object/entity the camera will orbit around, assigned in inspector
     public float distance = 5.0f; //the default/starting orbital distance from the target
     public float xSpeed = 180.0f; //sensitivity on x axis, default 120
     public float ySpeed = 180.0f; //sensitivity on y axis, default 120
