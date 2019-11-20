@@ -51,11 +51,13 @@ public class PlayerInteraction : MonoBehaviour
             GameObject NearbyObject = nearbyColliders[i].gameObject;                                    // get the gameobject of the colliders
             NearbyObject.SendMessage("WhileNearby", SendMessageOptions.DontRequireReceiver);            // run the WhileNearby() function on that gameobject if possible
             ///Use()
-            if (Input.GetKeyDown(useKey))                                                               // if the user presses the key to use an item
-            {                                                                                           //
-                NearbyObject.SendMessage("Use", SendMessageOptions.DontRequireReceiver);                // run the Use() function on the class
-            }                                                                                           
-
+            if (!Dialogue.isInDialogue)
+            {
+                if (Input.GetKeyDown(useKey))                                                               // if the user presses the key to use an item
+                {                                                                                           //
+                    NearbyObject.SendMessage("Use", SendMessageOptions.DontRequireReceiver);                // run the Use() function on the class
+                }
+            }
         }
 
         previousColliders = ArrayToList(ref nearbyColliders); //at the end of the frame, set the current frame's collider to the previous frame's colliders ready for the next frame

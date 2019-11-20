@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     CharacterController cc; //used to move player. defined in Start()
     public float speed = 50f; //the speed at which the player moves
-    public const float gravity = 0.1f;
+    public const float gravity = 0.1f; // used for somewhat realistic gravity. Default 0.1f
 
     // Start is called before the first frame update
     void Start()

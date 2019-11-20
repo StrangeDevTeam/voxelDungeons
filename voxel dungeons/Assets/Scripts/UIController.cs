@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 public class UIController : MonoBehaviour
 {
-    public GameObject InteractionPanel;
+    public static GameObject InteractionPanel;
+    public static GameObject DialoguePanel;
 
 
     public static bool isCursorVisible = true; //when true, the user can use mouse to navigate menus without rotating the camera or player in game
@@ -14,7 +16,10 @@ public class UIController : MonoBehaviour
     void Start()
     {
         ToggleMenus(); //default to cursor invisible on start
+        InteractionPanel = GameObject.Find("InteractionPanel");
         InteractionPanel.SetActive(false);
+        DialoguePanel = GameObject.Find("DialoguePanel");
+        DialoguePanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -33,5 +38,26 @@ public class UIController : MonoBehaviour
             UnityEngine.Cursor.lockState = CursorLockMode.Locked; //   and locking the players rotation
         UnityEngine.Cursor.visible = isCursorVisible;             //
 
+    }
+
+
+    public static void ShowInteractionTooltip()
+    {
+        InteractionPanel.SetActive(true);
+    }
+    public static void HideInteractionTooltip()
+    {
+        InteractionPanel.SetActive(false);
+    }
+
+    public static void ShowDialogueBox(string text)
+    {
+        Text dialogueText = DialoguePanel.GetComponentInChildren<Text>();
+        dialogueText.text = text;
+        DialoguePanel.SetActive(true);
+    }
+    public static void HideDialogueBox()
+    {
+        DialoguePanel.SetActive(false);
     }
 }

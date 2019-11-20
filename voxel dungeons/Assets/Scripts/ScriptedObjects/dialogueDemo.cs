@@ -4,15 +4,29 @@ using UnityEngine;
 
 public class dialogueDemo : MonoBehaviour
 {
-    // Start is called before the first frame update
+    Dialogue test3;
+    Dialogue test2;
+    Dialogue testDialogue;
+
     void Start()
     {
-        
+        test3 = new Dialogue("testes");
+        test2 = new Dialogue("And this is another test", test3);
+        testDialogue = new Dialogue("Hello there, This is a test", test2);
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnNearby()
     {
-        
+        UIController.ShowInteractionTooltip();
+    }
+    public void Use()
+    {
+        UIController.HideInteractionTooltip();
+        testDialogue.ShowDialogue();
+    }
+    public void NoLongerNearby()
+    {
+        testDialogue.HideDialogue();
     }
 }
