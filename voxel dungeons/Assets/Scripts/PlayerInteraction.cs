@@ -12,25 +12,39 @@ public class PlayerInteraction : MonoBehaviour
     void Update()
     {
         Collider[] nearbyColliders = Physics.OverlapSphere(this.transform.position, interactionDistance);  // get every collider within interactionDistance
-        Collider[] copyOfNearbyColliders = nearbyColliders; // make a copy of the nearby colliders that can be maipulated
-        /*//NoLongerNearby()                                                                
-        for (int h = 0; h < previousColliders.Count; h++)               // loop through the previous colliders
-        {                                                               //
-            for(int g = 0; g < copyOfNearbyColliders.Length; g++)       // loop through the current colliders (copy)
-            {                                                           //
-                if( copyOfNearbyColliders[g] == previousColliders[h])   // if a collider belongs to both
-                {                                                       //
-                    copyOfNearbyColliders[g] = null;                    // set it to null
-                }                                                       //  this means any colliders in the copy
-            }                                                           //  must be ones the player has walked away from
+        List<Collider> copyOfNearbyColliders =  ArrayToList(ref nearbyColliders); // make a copy of the nearby colliders that can be maipulated
+        ///OnNearby()                                                                
+        for (int h = 0; h < previousColliders.Count; h++)                   // loop through the previous frames colliders
+        {                                                                   //
+            for(int g = 0; g < copyOfNearbyColliders.Count; g++)            // loop through the current  frames colliders (copy)
+            {                                                               //
+                if( copyOfNearbyColliders[g] == previousColliders[h])       // if a collider belongs to both
+                {                                                           //
+                    copyOfNearbyColliders.Remove(copyOfNearbyColliders[g]); // remove it from the copyOfNearbyColliders list
+                }                                                           // this means any colliders in the copyOfNearbyColliders
+            }                                                               // must be ones the player has walked towards
         }                                                               
-        for(int f = 0; f < copyOfNearbyColliders.Length; f++)                                                               // loop through those (see above)
-        {                                                                                                                   //
-            if(copyOfNearbyColliders[f] != null)                                                                            // if it is not set to null
-            {                                                                                                               //
-                copyOfNearbyColliders[f].gameObject.SendMessage("NoLongerNearby", SendMessageOptions.DontRequireReceiver);  // run NoLongerNearby() on the collider
-            }
-        }*/
+        for(int f = 0; f < copyOfNearbyColliders.Count; f++)                                                    // loop through those (see above)
+        {                                                                                                       //
+            copyOfNearbyColliders[f].gameObject.SendMessage("OnNearby", SendMessageOptions.DontRequireReceiver);// run OnNearby() on them
+        }
+
+        ///NoLongerNearby()
+        for (int g = 0; g < previousColliders.Count; g++)               // loop through the previous frames colliders
+        {                                                               //
+            for (int h = 0; h < nearbyColliders.Length; h++)            // loop through the current frames colliders
+            {                                                           //
+                if (previousColliders[g] == nearbyColliders[h])         // if a collider belongs to both
+                {                                                       //
+                    previousColliders.Remove(previousColliders[g]);     // remove it from the previousColliders list
+                }                                                       // this means any colliders in the previousColliders list
+            }                                                           // must be ones the player has walked away from
+        }
+        for (int f = 0; f < previousColliders.Count; f++)                                                           // loop through those (see above)
+        {                                                                                                           //
+            previousColliders[f].gameObject.SendMessage("NoLongerNearby", SendMessageOptions.DontRequireReceiver);  // Run NoLongerNearby() on them
+        }
+
         ///WhileNearby()
         for (int i = 0; i < nearbyColliders.Length; i++)                                                // loop through all the colliders the player is nearby
         {                                                                                               // 
@@ -40,26 +54,21 @@ public class PlayerInteraction : MonoBehaviour
             if (Input.GetKeyDown(useKey))                                                               // if the user presses the key to use an item
             {                                                                                           //
                 NearbyObject.SendMessage("Use", SendMessageOptions.DontRequireReceiver);                // run the Use() function on the class
-            }                                                                                           // only if it has one
-            /*//OnNearby()
-            for(int j = 0; (j < previousColliders.Count) && (j < nearbyColliders.Length); j++)  // loop through both the neraby colliders and the previous colliders
-            {                                                                                   //
-                if(nearbyColliders[i] == previousColliders[j])                                  // if there is a collider in both 
-                {                                                                               //
-                    previousColliders.Remove(previousColliders[j]);                             // remove it from the previousColliders list
-                }                                                                               // this means the only remaining colliders are ones which the player
-            }                                                                                   // wasnt already nearby
-            for(int k = 0; k < previousColliders.Count; k++)                                                         // loop through those remaining colliders (see above)
-            {                                                                                                        //
-                previousColliders[k].gameObject.SendMessage("OnNearby", SendMessageOptions.DontRequireReceiver);     // run the OnNearby() function on that collider
-            }   */                                                                                                     //
+            }                                                                                           
 
         }
 
-        previousColliders = new List<Collider>();  // empty previous colliders
-        foreach(Collider Coll in nearbyColliders)  // loop through nearby colliders
-        {                                          //
-            previousColliders.Add(Coll);           // add them to previousColliders
-        }                                          // previousColliders is now ready for the next frame
+        previousColliders = ArrayToList(ref nearbyColliders); //at the end of the frame, set the current frame's collider to the previous frame's colliders ready for the next frame
+
+    }
+
+    List<Collider> ArrayToList(ref Collider[] array) // converts a Collider array to a list of Colliders
+    {
+        List<Collider> tempList = new List<Collider>();
+        foreach(Collider coll in array)
+        {
+            tempList.Add(coll);
+        }
+        return tempList;
     }
 }
