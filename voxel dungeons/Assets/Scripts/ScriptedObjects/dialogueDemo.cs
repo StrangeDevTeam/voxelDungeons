@@ -9,17 +9,24 @@ public class dialogueDemo : MonoBehaviour
     Dialogue testDialogue;
 
 
+    DialogueChoice test4;
     DialogueChoice testChoice;
 
     void Start()
     {
-        test3 = new Dialogue("testes");
+        test3 = new Dialogue("okay bye");
         test2 = new Dialogue("And this is another test", test3);
         testDialogue = new Dialogue("Hello there, This is a test", test2);
 
-        string[] choices = { "option 1", "option 2"};
-        Dialogue[] dChoices = { testDialogue, test3 };
-        testChoice = new DialogueChoice("make your choice", choices, dChoices);
+
+
+        string[] choices2 = { "yes, let mt buy something already", "nevermind" };
+        Dialogue[] dChoices2 = { test3, test3 };
+        test4 = new DialogueChoice("are you sure?", choices2, dChoices2);
+
+        string[] choices = { "yes", "no, fuck off"};
+        Dialogue[] dChoices = { test4, test3 };
+        testChoice = new DialogueChoice("would you like to buy something", choices, dChoices);
 
     }
 
@@ -30,7 +37,7 @@ public class dialogueDemo : MonoBehaviour
     public void Use()
     {
         UIController.HideInteractionTooltip();
-        testDialogue.ShowDialogue();
+        testChoice.ShowDialogue();
     }
     public void NoLongerNearby()
     {

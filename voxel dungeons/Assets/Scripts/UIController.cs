@@ -8,6 +8,7 @@ public class UIController : MonoBehaviour
 {
     public static GameObject InteractionPanel;
     public static GameObject DialoguePanel;
+    public static GameObject DialogueChoices;
 
 
     public static bool isCursorVisible = true; //when true, the user can use mouse to navigate menus without rotating the camera or player in game
@@ -18,6 +19,9 @@ public class UIController : MonoBehaviour
         ToggleMenus(); //default to cursor invisible on start
         InteractionPanel = GameObject.Find("InteractionPanel");
         InteractionPanel.SetActive(false);
+
+        DialogueChoices = GameObject.Find("DialogueChoices");
+        DialogueChoices.SetActive(false);
         DialoguePanel = GameObject.Find("DialoguePanel");
         DialoguePanel.SetActive(false);
     }
@@ -59,5 +63,16 @@ public class UIController : MonoBehaviour
     public static void HideDialogueBox()
     {
         DialoguePanel.SetActive(false);
+    }
+
+    public static void ShowDialogueChoices(string text)
+    {
+        Text dialogueChoiceText = DialogueChoices.GetComponentInChildren<Text>();
+        dialogueChoiceText.text = text;
+        DialogueChoices.SetActive(true);
+    }
+    public static void HideDialogueChoices()
+    {
+        DialogueChoices.SetActive(false);
     }
 }

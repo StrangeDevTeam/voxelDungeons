@@ -24,7 +24,6 @@ public class Dialogue : MonoBehaviour
         try
         {
             DialogueChoice currentDialogueChoice = (DialogueChoice)currentDialogue;
-            Debug.Log("fuck");
             if (!currentDialogue.pauseForFrame)
             {
                 if (isInDialogue)
@@ -33,28 +32,67 @@ public class Dialogue : MonoBehaviour
                     {
                         if (Input.GetKeyDown(DialogueChoice.option1))
                         {
-                            currentDialogueChoice.nextBranches[0].ShowDialogue();
+                            try
+                            {
+                                DialogueChoice castedChoice = (DialogueChoice)currentDialogueChoice.nextBranches[0];
+                                castedChoice.ShowDialogue();
+                            }
+                            catch (Exception)
+                            {
+                                currentDialogueChoice.nextBranches[0].ShowDialogue();
+                            }
                         }
                         else if (Input.GetKeyDown(DialogueChoice.option2))
                         {
-                            currentDialogueChoice.nextBranches[1].ShowDialogue();
+                            try
+                            {
+                                DialogueChoice castedChoice = (DialogueChoice)currentDialogueChoice.nextBranches[1];
+                                castedChoice.ShowDialogue();
+                            }
+                            catch (Exception)
+                            {
+                                currentDialogueChoice.nextBranches[1].ShowDialogue();
+                            }
                         }
                         else if (Input.GetKeyDown(DialogueChoice.option3))
                         {
-                            currentDialogueChoice.nextBranches[2].ShowDialogue();
+                            try
+                            {
+                                DialogueChoice castedChoice = (DialogueChoice)currentDialogueChoice.nextBranches[2];
+                                castedChoice.ShowDialogue();
+                            }
+                            catch (Exception)
+                            {
+                                currentDialogueChoice.nextBranches[2].ShowDialogue();
+                            }
                         }
                         else if (Input.GetKeyDown(DialogueChoice.option4))
                         {
-                            currentDialogueChoice.nextBranches[3].ShowDialogue();
+                            try
+                            {
+                                DialogueChoice castedChoice = (DialogueChoice)currentDialogueChoice.nextBranches[3];
+                                castedChoice.ShowDialogue();
+                            }
+                            catch (Exception)
+                            {
+                                currentDialogueChoice.nextBranches[3].ShowDialogue();
+                            };
                         }
                         else if (Input.GetKeyDown(DialogueChoice.option5))
                         {
-                            currentDialogueChoice.nextBranches[4].ShowDialogue();
+                            try
+                            {
+                                DialogueChoice castedChoice = (DialogueChoice)currentDialogueChoice.nextBranches[4];
+                                castedChoice.ShowDialogue();
+                            }
+                            catch (Exception)
+                            {
+                                currentDialogueChoice.nextBranches[4].ShowDialogue();
+                            }
                         }
                     }
                     catch (Exception)
                     {
-                        currentDialogue.HideDialogue();
                     }
                 }
             }
@@ -112,6 +150,7 @@ public class Dialogue : MonoBehaviour
     {
         currentDialogue = this;
         UIController.ShowDialogueBox(text);
+        UIController.HideDialogueChoices();
         isInDialogue = true;
         pauseForFrame = true;
     }
@@ -142,8 +181,20 @@ public class DialogueChoice : Dialogue
         nextBranches = nextDialogueBranches;
     }
 
-    void LateUpdate()
+    public void ShowDialogue()
     {
-        
+        currentDialogue = this;
+        UIController.ShowDialogueBox(text);
+        isInDialogue = true;
+        pauseForFrame = true;
+        string choiceText = "";
+
+        for(int i = 0; i< choices.Length; i++)
+        {
+            choiceText = choiceText + (i+1) + " -  "+ choices[i] + "\n";
+        }
+
+
+        UIController.ShowDialogueChoices(choiceText);
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
 {
-    public float interactionDistance = 5; // the distance in which the user can interact with a UsableObject
+    public float interactionDistance = 7.5f; // the distance in which the user can interact with a UsableObject
     public KeyCode useKey = KeyCode.F; // this is the key the user will press to use/ interact with an object. Default f
     public List<Collider> previousColliders = new List<Collider>();
 
