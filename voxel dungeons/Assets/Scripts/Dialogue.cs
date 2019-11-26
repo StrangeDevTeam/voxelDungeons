@@ -17,6 +17,7 @@ public class Dialogue : MonoBehaviour
     public Dialogue nextDialogue = null; // the link to the next dialogue if there is one
     [HideInInspector]
     public bool pauseForFrame = true; // stops the program from ruching ahead, when true the program will wait 1 frame before monitoring inputs
+    public Quest triggeredQuest = null;
 
     void LateUpdate()
     {
@@ -139,6 +140,11 @@ public class Dialogue : MonoBehaviour
     {
         text = dialogueText;
     }
+    public Dialogue(string dialogueText, Quest QuestLinkedToDialogue)
+    {
+        text = dialogueText;
+        triggeredQuest = QuestLinkedToDialogue;
+    }
     public Dialogue(string dialogueText, Dialogue next)
     {
         text = dialogueText;
@@ -153,6 +159,11 @@ public class Dialogue : MonoBehaviour
         UIController.HideDialogueChoices();
         isInDialogue = true;
         pauseForFrame = true;
+        if(triggeredQuest != null)
+        {
+            Quest.ActiveQuest = triggeredQuest;
+            Debug.Log("Quest triggered: " + triggeredQuest.title);
+        }
     }
     public void HideDialogue()
     {

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,20 +16,48 @@ public class Enemy : ScriptableObject
         name = pName;
     }
 
-    public void CheckforKill()
+    public bool CheckforKill()
     {
-
-        Debug.Log("test");
         if (health <= 0)
         {
-            onKill();
+            OnKill();
+            return true;
         }
+        return false;
     }
 
 
 
-    void onKill()
+    void OnKill()
     {
-         Destroy(this);
+        Quest q = Quest.ActiveQuest;
+        for (int i = 0; i <q.steps.Count; i++)
+        {
+            KillQuest kq = converttoKillQuest(q.steps[i]);
+            if(kq != null)
+            {
+                for(int j = 0; j < kq.targets.Count; j++)
+                {
+                    if (this == kq.targets[j])
+                    {
+                        kq.TargetKilled();
+                    }
+                }
+            }
+        }
+        
+    }
+
+    KillQuest converttoKillQuest (QuestStep pQuestStep)
+    {
+        try
+        {
+            KillQuest temp = (KillQuest)pQuestStep;
+            return temp;
+        }
+        catch (Exception)
+        {
+            return null;
+        }
     }
 }

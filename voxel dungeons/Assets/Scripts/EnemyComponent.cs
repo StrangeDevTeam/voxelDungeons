@@ -10,6 +10,15 @@ public class EnemyComponent : MonoBehaviour
     public void Use()
     {
         enemyReference.health = 0;
-        enemyReference.CheckforKill();
+        bool isDed = enemyReference.CheckforKill();
+        if (isDed)
+        {
+            Kill();
+        }
+    }
+    void Kill()
+    {
+        Destroy(this.gameObject);
+        PlayerInteraction.previousColliders.Remove(this.gameObject.GetComponent<Collider>());
     }
 }

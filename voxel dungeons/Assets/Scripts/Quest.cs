@@ -7,13 +7,25 @@ public class Quest
 {
     public static Quest ActiveQuest = null;
 
-    bool complete = false;
-    string title = "quest title";
-    string info = "quest info";
-    List<QuestStep> steps = new List<QuestStep>();
+    public bool complete = false;
+    public string title = "quest title";
+    public string info = "quest info";
+    public List<QuestStep> steps = new List<QuestStep>();
     //Item[] rewards = new Item[];
 
-    public static KillQuest convertToKillQuest(Quest pQuest)
+    public Quest(string pTitle, string pInfo, List<QuestStep> pSteps)
+    {
+        complete = false;
+        title = pTitle;
+        info = pInfo;
+        steps = pSteps;
+        foreach(QuestStep step in pSteps)
+        {
+            step.attachParent(this);
+        }
+    }
+    
+    public static KillQuest convertToKillQuest(QuestStep pQuest)
     {
         try
         {
@@ -25,16 +37,70 @@ public class Quest
             return null;
         }
     }
+
+    public void UpdateQuestStatus()
+    {
+        bool isQuestComplete = true;
+        foreach(QuestStep step in steps)
+        {
+            if(step.stepComplete != true)
+            {
+                isQuestComplete = false;
+                break;
+            }
+        }
+        if (isQuestComplete)
+        {
+            complete = true;
+            OnComplete();
+        }
+    }
+    void OnComplete()
+    {
+        Debug.Log(title+" Completed");
+    }
 }
-public class QuestStep : Quest
+public class QuestStep
 {
-    bool stepComplete = false;
-    string title = "task title";
-    bool showTitle = true;
+    public Quest ParentQuest = null;
+    public bool stepComplete = false;
+    public string title = "task title";
+    public bool showTitle = true;
+
+    public QuestStep(string pTitle)
+    {
+        title = pTitle;
+    }
+    public void attachParent(Quest pParentQuest)
+    {
+        ParentQuest = pParentQuest;
+    }
 }
 public class KillQuest : QuestStep
 {
-    List<Enemy> targets = new List<Enemy>();
-    int killsNeeded = 1;
-    int amountKilled = 0;
+    public List<Enemy> targets = new List<Enemy>();
+    public int killsNeeded = 1;
+    public int amountKilled = 0;
+
+    public KillQuest(string pTitle, Enemy pTarget, int pKillsNeeded) : base (pTitle)
+    {
+        targets.Clear();
+        targets.Add(pTarget);
+        killsNeeded = pKillsNeeded;
+    }
+    public KillQuest(string pTitle, List<Enemy> pTargets, int pKillsNeeded) : base(pTitle)
+    {
+        targets = pTargets;
+        killsNeeded = pKillsNeeded;
+    }
+
+    public void TargetKilled()
+    {
+        amountKilled++;
+        if(amountKilled >= killsNeeded)
+        {
+            stepComplete = true;
+            ParentQuest.UpdateQuestStatus();
+        }
+    }
 }

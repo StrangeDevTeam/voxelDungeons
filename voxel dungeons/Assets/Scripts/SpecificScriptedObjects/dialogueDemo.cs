@@ -4,30 +4,35 @@ using UnityEngine;
 
 public class dialogueDemo : MonoBehaviour
 {
-    Dialogue test3;
-    Dialogue test2;
-    Dialogue testDialogue;
+    DialogueChoice haveAnyQuests;
 
+    Dialogue killQuestDemo;
+    Dialogue bye;
 
-    DialogueChoice test4;
-    DialogueChoice testChoice;
+    KillQuest killtask;
+    Quest killCylinder;
+
+    public Enemy target = null;
 
     void Start()
     {
-        test3 = new Dialogue("okay bye");
-        test2 = new Dialogue("And this is another test", test3);
-        testDialogue = new Dialogue("Hello there, This is a test", test2);
+        //create killQuest (Queststep)
+        killtask = new KillQuest("kill cylinder",target, 1);
+        //create blank array and add killquest (queststep) to it
+        List<QuestStep> questSteps = new List<QuestStep>();
+        questSteps.Add(killtask);
+        //create quest using Queststeps
+        killCylinder = new Quest("kill cylinder", "Kill the cylinder",questSteps);
+
+        //create dialogue to trigger quest
+        killQuestDemo = new Dialogue("Kill that fucking cylinder over there", killCylinder);
+        bye = new Dialogue("Okay bye");
 
 
 
-        string[] choices2 = { "yes, let mt buy something already", "nevermind" };
-        Dialogue[] dChoices2 = { test3, test3 };
-        test4 = new DialogueChoice("are you sure?", choices2, dChoices2);
-
-        string[] choices = { "yes", "no, fuck off"};
-        Dialogue[] dChoices = { test4, test3 };
-        testChoice = new DialogueChoice("would you like to buy something", choices, dChoices);
-
+        string[]  replies = new string[] {"Yes" ,"No, Fuck off"};
+        Dialogue[] branches = new Dialogue[] { killQuestDemo, bye };
+        haveAnyQuests = new DialogueChoice("Hey, i have a quest for you, wil you help?", replies, branches);
     }
 
     public void OnNearby()
@@ -37,11 +42,11 @@ public class dialogueDemo : MonoBehaviour
     public void Use()
     {
         UIController.HideInteractionTooltip();
-        testChoice.ShowDialogue();
+        haveAnyQuests.ShowDialogue();
     }
     public void NoLongerNearby()
     {
-        testDialogue.HideDialogue();
+        haveAnyQuests.HideDialogue();
         UIController.HideInteractionTooltip();
     }
 }
