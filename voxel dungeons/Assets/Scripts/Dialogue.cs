@@ -9,6 +9,7 @@ public class Dialogue : MonoBehaviour
     public static bool isInDialogue = false; // is the user currently in a dialogue with an entitiy?
     public static KeyCode nextKey = KeyCode.F; // the key the user presses to move on to the next dialogue
     public static Dialogue currentDialogue; // a link to the current or last dialogue the user has active
+    public static int nextID = 0;
 
     /// public 
     [HideInInspector]
@@ -17,11 +18,13 @@ public class Dialogue : MonoBehaviour
     public Dialogue nextDialogue = null; // the link to the next dialogue if there is one
     [HideInInspector]
     public bool pauseForFrame = true; // stops the program from ruching ahead, when true the program will wait 1 frame before monitoring inputs
-    public Quest triggeredQuest = null;
+    [HideInInspector]
+    public int ID = -1;
+    public Quest triggeredQuest = null; // the tuest to be triggered on this dialogue, if there is one
 
     void LateUpdate()
     {
-
+        //if Dialogue is DialogueChoice
         try
         {
             DialogueChoice currentDialogueChoice = (DialogueChoice)currentDialogue;
@@ -31,6 +34,7 @@ public class Dialogue : MonoBehaviour
                 {
                     try
                     {
+                        // when user presses 1, run dialogue branch 1 if possible
                         if (Input.GetKeyDown(DialogueChoice.option1))
                         {
                             try
@@ -43,6 +47,7 @@ public class Dialogue : MonoBehaviour
                                 currentDialogueChoice.nextBranches[0].ShowDialogue();
                             }
                         }
+                        // when user presses 2, run dialogue branch 2 if possible
                         else if (Input.GetKeyDown(DialogueChoice.option2))
                         {
                             try
@@ -55,6 +60,7 @@ public class Dialogue : MonoBehaviour
                                 currentDialogueChoice.nextBranches[1].ShowDialogue();
                             }
                         }
+                        // when user presses 3, run dialogue branch 3 if possible
                         else if (Input.GetKeyDown(DialogueChoice.option3))
                         {
                             try
@@ -67,6 +73,7 @@ public class Dialogue : MonoBehaviour
                                 currentDialogueChoice.nextBranches[2].ShowDialogue();
                             }
                         }
+                        // when user presses 4, run dialogue branch 4 if possible
                         else if (Input.GetKeyDown(DialogueChoice.option4))
                         {
                             try
@@ -79,6 +86,7 @@ public class Dialogue : MonoBehaviour
                                 currentDialogueChoice.nextBranches[3].ShowDialogue();
                             };
                         }
+                        // when user presses 5, run dialogue branch 5 if possible
                         else if (Input.GetKeyDown(DialogueChoice.option5))
                         {
                             try
@@ -102,7 +110,7 @@ public class Dialogue : MonoBehaviour
                 currentDialogue.pauseForFrame = false;
             }
         }
-
+        // if Dialogue is not DialogueChoice
         catch (Exception)
         {
             try
@@ -111,6 +119,7 @@ public class Dialogue : MonoBehaviour
                 {
                     if (isInDialogue)
                     {
+                        // when the 'next key' is pressed, show the next dialogue. or hide the window if there is no next dialogue
                         if (Input.GetKeyDown(nextKey))
                         {
                             try
@@ -136,22 +145,57 @@ public class Dialogue : MonoBehaviour
 
     }
 
+
+    /// <summary>
+    /// create a dialogue. After running the window will close.
+    /// </summary>
+    /// <param name="dialogueText">the dialogue text</param>
     public Dialogue(string dialogueText)
     {
         text = dialogueText;
+        ID = nextID;
+        nextID++;
     }
+    /// <summary>
+    /// create a dialogue which will trigger a quest when run. After willing the window will close.
+    /// </summary>
+    /// <param name="dialogueText"> the dialogue text</param>
+    /// <param name="QuestLinkedToDialogue"> the quest to give the player once this dialogue is run</param>
     public Dialogue(string dialogueText, Quest QuestLinkedToDialogue)
     {
         text = dialogueText;
         triggeredQuest = QuestLinkedToDialogue;
+        ID = nextID;
+        nextID++;
     }
-    public Dialogue(string dialogueText, Dialogue next)
+    /// <summary>
+    /// create a dialogue. after running the linked dialogue will show.
+    /// </summary>
+    /// <param name="dialogueText">the dialogue text</param>
+    /// <param name="linkedDialogue"> the dialogue to run after this one ends</param>
+    public Dialogue(string dialogueText, Dialogue linkedDialogue)
     {
         text = dialogueText;
-        nextDialogue = next;
+        nextDialogue = linkedDialogue;
+        ID = nextID;
+        nextID++;
+    }
+    /// <summary>
+    /// create a dialogue which will trigger a quest when run. afte rinning the linked dialogue will show.
+    /// </summary>
+    /// <param name="dialogueText">the dialogue text</param>
+    /// <param name="linkedDialogue"> the dialogue to run after this one ends</param>
+    /// <param name="QuestLinkedToDialogue"> the quest to give the plaeyr once this dialogue is run</param>
+    public Dialogue(string dialogueText, Dialogue linkedDialogue, Quest QuestLinkedToDialogue)
+    {
+        text = dialogueText;
+        nextDialogue = linkedDialogue;
+        triggeredQuest = QuestLinkedToDialogue;
+        ID = nextID;
+        nextID++;
     }
 
-
+    //Show dialogue on screen, trigger quest if there is one
     public void ShowDialogue()
     {
         currentDialogue = this;
@@ -159,16 +203,39 @@ public class Dialogue : MonoBehaviour
         UIController.HideDialogueChoices();
         isInDialogue = true;
         pauseForFrame = true;
-        if(triggeredQuest != null)
-        {
-            Quest.ActiveQuest = triggeredQuest;
-            Debug.Log("Quest triggered: " + triggeredQuest.title);
-        }
+        triggerQuest();
+        CheckForQuestDialogue();
     }
+    //hide dialogue from screen
     public void HideDialogue()
     {
         UIController.HideDialogueBox();
         isInDialogue = false;
+    }
+
+    protected void triggerQuest()
+    {
+        if (triggeredQuest != null)
+        {
+            Quest.ActiveQuest = triggeredQuest;// TODO: add this into quest log (once implemented) instead of setting it to active
+            Quest.ActiveQuest.started = true;
+            Debug.Log("Quest triggered: " + triggeredQuest.title);
+        }
+    }
+
+    public void CheckForQuestDialogue()
+    {
+        for(int i = 0; i< Quest.ActiveQuest.steps.Count ; i++ )
+        {
+            TalkQuest activeTalkQuest = Quest.convertToTalkQuest(Quest.ActiveQuest.steps[i]);
+            if( activeTalkQuest !=null)
+            {
+                if(activeTalkQuest.ID == currentDialogue.ID)
+                {
+                    activeTalkQuest.QuestedDialogueRun();
+                }
+            }
+        }
     }
 }
 public class DialogueChoice : Dialogue
@@ -186,13 +253,19 @@ public class DialogueChoice : Dialogue
     [HideInInspector]
     public Dialogue[] nextBranches;
 
+    /// <summary>
+    /// create a dialogue where the user may respond a number of ways
+    /// </summary>
+    /// <param name="dialogueText">the dialogue text</param>
+    /// <param name="dialogueChoices">an array of dialogue options the user may choose, written as a string</param>
+    /// <param name="nextDialogueBranches">an array of dialogues ro be run after the respeoctive dialogueChoice is selected by the player</param>
     public DialogueChoice( string dialogueText, string[] dialogueChoices , Dialogue[] nextDialogueBranches) : base(dialogueText)
     {
         choices = dialogueChoices;
         nextBranches = nextDialogueBranches;
     }
 
-    public void ShowDialogue()
+    new public void ShowDialogue()
     {
         currentDialogue = this;
         UIController.ShowDialogueBox(text);
@@ -204,6 +277,8 @@ public class DialogueChoice : Dialogue
         {
             choiceText = choiceText + (i+1) + " -  "+ choices[i] + "\n";
         }
+
+        triggerQuest();
 
 
         UIController.ShowDialogueChoices(choiceText);
