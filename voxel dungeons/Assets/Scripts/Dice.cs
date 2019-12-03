@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Dice : MonoBehaviour
 {
-    //returns an integer equal to diceroll (inputting 3d20 will output the sum of 3 numbers between 1 and 20)
     public static int Roll(string dicename)
     {
         string[] diceNumbers = dicename.Split('d');

@@ -13,58 +13,46 @@ public class UIController : MonoBehaviour
 
     public static bool isCursorVisible = true; //when true, the user can use mouse to navigate menus without rotating the camera or player in game
 
-    
+    // Start is called before the first frame update
     void Start()
     {
         ToggleMenus(); //default to cursor invisible on start
-
         InteractionPanel = GameObject.Find("InteractionPanel");
         InteractionPanel.SetActive(false);
 
         DialogueChoices = GameObject.Find("DialogueChoices");
         DialogueChoices.SetActive(false);
-
         DialoguePanel = GameObject.Find("DialoguePanel");
         DialoguePanel.SetActive(false);
     }
-    
 
+    // Update is called once per frame
     void Update()
     {
-        //when escape is pressed, toggle whether mouse moved charcter or cursor
-        if (Input.GetKeyDown(KeyCode.Escape)) 
-            ToggleMenus();                    
+        if (Input.GetKeyDown(KeyCode.Escape)) // when escape is pressed
+            ToggleMenus();                    // toggle whether mouse moves character or cursor
     }
 
-    /// <summary>
-    /// toggle between Locking cursor for player rotation, and unlocking cursor for navigating menus
-    /// </summary>
     void ToggleMenus()
     {
-        isCursorVisible = !isCursorVisible;          
-        if (isCursorVisible)                          
-            UnityEngine.Cursor.lockState = CursorLockMode.None;  
-        else                                         
-            UnityEngine.Cursor.lockState = CursorLockMode.Locked; 
-        UnityEngine.Cursor.visible = isCursorVisible;           
+        isCursorVisible = !isCursorVisible;           // toggles between
+        if (isCursorVisible)                          // - locking cursor and mouse movements
+            UnityEngine.Cursor.lockState = CursorLockMode.None;   //   move player and camera
+        else                                          // - unlocking cursor so user can navigate menus
+            UnityEngine.Cursor.lockState = CursorLockMode.Locked; //   and locking the players rotation
+        UnityEngine.Cursor.visible = isCursorVisible;             //
 
     }
 
-    /// <summary>
-    /// Show "press f to interact"
-    /// </summary>
+
     public static void ShowInteractionTooltip()
     {
         InteractionPanel.SetActive(true);
     }
-    /// <summary>
-    /// hide "press f to interact"
-    /// </summary>
     public static void HideInteractionTooltip()
     {
         InteractionPanel.SetActive(false);
     }
-
 
     public static void ShowDialogueBox(string text)
     {

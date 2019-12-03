@@ -17,12 +17,12 @@ public class dialogueDemo : MonoBehaviour
     void Start()
     {
         //create killQuest (Queststep)
-        killtask = new KillQuest("kill cylinder", target, 1);
+        killtask = new KillQuest("kill cylinder",target, 1);
         //create blank array and add killquest (queststep) to it
         List<QuestStep> questSteps = new List<QuestStep>();
         questSteps.Add(killtask);
         //create quest using Queststeps
-        killCylinder = new Quest("kill cylinder", "Kill the cylinder", questSteps);
+        killCylinder = new Quest("kill cylinder", "Kill the cylinder",questSteps);
 
         //create dialogue to trigger quest
         killQuestDemo = new Dialogue("Kill that fucking cylinder over there", killCylinder);
@@ -30,7 +30,7 @@ public class dialogueDemo : MonoBehaviour
 
 
 
-        string[] replies = new string[] { "Yes", "No, Fuck off" };
+        string[]  replies = new string[] {"Yes" ,"No, Fuck off"};
         Dialogue[] branches = new Dialogue[] { killQuestDemo, bye };
         haveAnyQuests = new DialogueChoice("Hey, i have a quest for you, wil you help?", replies, branches);
     }
