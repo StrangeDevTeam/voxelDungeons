@@ -63,6 +63,17 @@ public class Quest
             return null;
         }
     }
+    public static TalkQuest convertToTalkQuest(QuestStep pQuest){
+        try
+        {
+            TalkQuest temp = (TalkQuest)(pQuest);
+            return temp;
+        }
+        catch(Exception)
+        {
+            return null;
+        }
+    }
 
     /// <summary>
     /// checks if all the queststeps are complete, if so complete this quest
@@ -97,11 +108,16 @@ public class QuestStep
     public bool stepComplete = false; // true when this objective is complete
     public string title = "task title"; // the title of the objective
     public bool showTitle = true; // whether or not the title should show on the UI
+    public int ID = -1;
+    public static int nextID = 0;
+
 
     
     public QuestStep(string pTitle)
     {
         title = pTitle;
+        ID= nextID;
+        nextID++;
     }
     //run when the Quest is created, attaches the parent Quest to these objectives
     public void attachParent(Quest pParentQuest)
@@ -148,5 +164,20 @@ public class KillQuest : QuestStep
             stepComplete = true;
             ParentQuest.UpdateQuestStatus();
         }
+    }
+}
+public class TalkQuest : QuestStep
+{
+    public Dialogue questedDialogue;
+
+    public TalkQuest(string pTitle, Dialogue pQuestedDialogue)  : base(pTitle)
+    {
+        questedDialogue = pQuestedDialogue;
+    }
+
+    public void QuestedDialogueRun()
+    {
+        stepComplete = true;
+        ParentQuest.UpdateQuestStatus();
     }
 }

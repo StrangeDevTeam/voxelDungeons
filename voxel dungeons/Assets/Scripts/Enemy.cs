@@ -7,7 +7,7 @@ using UnityEngine;
 public class Enemy : ScriptableObject
 {
     public int health = 100;
-    public string name = "geoff";
+    public string enemyName = "geoff";
 
     /// <summary>
     /// create an enemy with a name and health
@@ -17,7 +17,7 @@ public class Enemy : ScriptableObject
     public Enemy(int pHealth, string pName)
     {
         health = pHealth;
-        name = pName;
+        enemyName = pName;
     }
 
     //check if the enemy has been killed

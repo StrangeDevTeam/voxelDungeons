@@ -9,7 +9,7 @@ public class dialogueDemo : MonoBehaviour
     Dialogue killQuestDemo;
     Dialogue bye;
 
-    KillQuest killtask;
+    TalkQuest killtask;
     Quest killCylinder;
 
     public Enemy target = null;
@@ -17,22 +17,22 @@ public class dialogueDemo : MonoBehaviour
     void Start()
     {
         //create killQuest (Queststep)
-        killtask = new KillQuest("kill cylinder", target, 1);
+        killtask = new TalkQuest("talk to cylinder", Demo2.test);
         //create blank array and add killquest (queststep) to it
         List<QuestStep> questSteps = new List<QuestStep>();
         questSteps.Add(killtask);
         //create quest using Queststeps
-        killCylinder = new Quest("kill cylinder", "Kill the cylinder", questSteps);
+        killCylinder = new Quest("talk to cylinder", "talk to the cylinder", questSteps);
 
         //create dialogue to trigger quest
-        killQuestDemo = new Dialogue("Kill that fucking cylinder over there", killCylinder);
+        killQuestDemo = new Dialogue("talk to  that  cylinder over there", killCylinder);
         bye = new Dialogue("Okay bye");
 
 
 
-        string[] replies = new string[] { "Yes", "No, Fuck off" };
+        string[] replies = new string[] { "Yes", "No, go away" };
         Dialogue[] branches = new Dialogue[] { killQuestDemo, bye };
-        haveAnyQuests = new DialogueChoice("Hey, i have a quest for you, wil you help?", replies, branches);
+        haveAnyQuests = new DialogueChoice("Hey, i have a quest for you, will you help?", replies, branches);
     }
 
     public void OnNearby()

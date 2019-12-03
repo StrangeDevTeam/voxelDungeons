@@ -9,6 +9,7 @@ public class Dialogue : MonoBehaviour
     public static bool isInDialogue = false; // is the user currently in a dialogue with an entitiy?
     public static KeyCode nextKey = KeyCode.F; // the key the user presses to move on to the next dialogue
     public static Dialogue currentDialogue; // a link to the current or last dialogue the user has active
+    public static int nextID = 0;
 
     /// public 
     [HideInInspector]
@@ -17,6 +18,8 @@ public class Dialogue : MonoBehaviour
     public Dialogue nextDialogue = null; // the link to the next dialogue if there is one
     [HideInInspector]
     public bool pauseForFrame = true; // stops the program from ruching ahead, when true the program will wait 1 frame before monitoring inputs
+    [HideInInspector]
+    public int ID = -1;
     public Quest triggeredQuest = null; // the tuest to be triggered on this dialogue, if there is one
 
     void LateUpdate()
@@ -150,6 +153,8 @@ public class Dialogue : MonoBehaviour
     public Dialogue(string dialogueText)
     {
         text = dialogueText;
+        ID = nextID;
+        nextID++;
     }
     /// <summary>
     /// create a dialogue which will trigger a quest when run. After willing the window will close.
@@ -160,6 +165,8 @@ public class Dialogue : MonoBehaviour
     {
         text = dialogueText;
         triggeredQuest = QuestLinkedToDialogue;
+        ID = nextID;
+        nextID++;
     }
     /// <summary>
     /// create a dialogue. after running the linked dialogue will show.
@@ -170,6 +177,8 @@ public class Dialogue : MonoBehaviour
     {
         text = dialogueText;
         nextDialogue = linkedDialogue;
+        ID = nextID;
+        nextID++;
     }
     /// <summary>
     /// create a dialogue which will trigger a quest when run. afte rinning the linked dialogue will show.
@@ -182,6 +191,8 @@ public class Dialogue : MonoBehaviour
         text = dialogueText;
         nextDialogue = linkedDialogue;
         triggeredQuest = QuestLinkedToDialogue;
+        ID = nextID;
+        nextID++;
     }
 
     //Show dialogue on screen, trigger quest if there is one
@@ -193,6 +204,7 @@ public class Dialogue : MonoBehaviour
         isInDialogue = true;
         pauseForFrame = true;
         triggerQuest();
+        CheckForQuestDialogue();
     }
     //hide dialogue from screen
     public void HideDialogue()
@@ -208,6 +220,21 @@ public class Dialogue : MonoBehaviour
             Quest.ActiveQuest = triggeredQuest;// TODO: add this into quest log (once implemented) instead of setting it to active
             Quest.ActiveQuest.started = true;
             Debug.Log("Quest triggered: " + triggeredQuest.title);
+        }
+    }
+
+    public void CheckForQuestDialogue()
+    {
+        for(int i = 0; i< Quest.ActiveQuest.steps.Count ; i++ )
+        {
+            TalkQuest activeTalkQuest = Quest.convertToTalkQuest(Quest.ActiveQuest.steps[i]);
+            if( activeTalkQuest !=null)
+            {
+                if(activeTalkQuest.ID == currentDialogue.ID)
+                {
+                    activeTalkQuest.QuestedDialogueRun();
+                }
+            }
         }
     }
 }
@@ -238,7 +265,7 @@ public class DialogueChoice : Dialogue
         nextBranches = nextDialogueBranches;
     }
 
-    public void ShowDialogue()
+    new public void ShowDialogue()
     {
         currentDialogue = this;
         UIController.ShowDialogueBox(text);

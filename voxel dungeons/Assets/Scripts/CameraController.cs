@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
@@ -20,7 +18,7 @@ public class CameraController : MonoBehaviour
     public float distanceMin = 3f; // the minimum distance the camera can zoom in to view the character
     public float distanceMax = 15f; // the maximum distrance the camera may zoom out from the character
 
-    private Rigidbody rigidbody; // declared in Start()
+    new private Rigidbody rigidbody; // declared in Start()
 
     //co-ordinates of the camera
     float x = 0.0f;
