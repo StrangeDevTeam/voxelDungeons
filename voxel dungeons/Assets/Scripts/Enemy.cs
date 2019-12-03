@@ -9,13 +9,18 @@ public class Enemy : ScriptableObject
     public int health = 100;
     public string name = "geoff";
 
-
+    /// <summary>
+    /// create an enemy with a name and health
+    /// </summary>
+    /// <param name="pHealth">health of the enemy</param>
+    /// <param name="pName">name of the enemy</param>
     public Enemy(int pHealth, string pName)
     {
         health = pHealth;
         name = pName;
     }
 
+    //check if the enemy has been killed
     public bool CheckforKill()
     {
         if (health <= 0)
@@ -27,9 +32,10 @@ public class Enemy : ScriptableObject
     }
 
 
-
+    //run when the enemy is killed
     void OnKill()
     {
+        //if active quest is tracking kills of this enemy, increment the amount of this enemy killed
         Quest q = Quest.ActiveQuest;
         for (int i = 0; i <q.steps.Count; i++)
         {
@@ -48,6 +54,11 @@ public class Enemy : ScriptableObject
         
     }
 
+    /// <summary>
+    /// converts QuestStep to KillQuest, returns null if not possible
+    /// </summary>
+    /// <param name="pQuestStep">the Quest step to convert</param>
+    /// <returns></returns>
     KillQuest converttoKillQuest (QuestStep pQuestStep)
     {
         try
