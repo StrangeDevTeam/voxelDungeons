@@ -1,0 +1,245 @@
+#sticky /*Positions the id 'sticky' at the bottom of the screen*/
+{
+    position: sticky;
+    :0;
+    
+}
+header
+{
+    color:white;
+    width:99.5%;
+    /*height: 100px;*/
+    margin-left: 0;
+    text-align: left;
+    font-family: verdana;
+    font-size: 2em;
+    padding-top:1%;
+    padding-bottom:1%;
+    padding-left: 0.5%;
+}
+
+nav
+{
+    background-color: rgb(63, 90, 124);
+    margin-top: 0;
+    font-size: 1.5em;
+    margin-bottom: 2%;
+    width: 100%;
+    height: 40px;
+}
+
+nav a
+{
+    color: white;
+    text-decoration: none;
+    height: 40px;
+    margin-top: 50px;
+    padding-left:10px;
+    padding-top: 0.75px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+     
+    
+}
+
+a:hover
+{
+    color:aquamarine;
+    
+}
+
+nav  a.active
+{
+    background-color: rgb(45, 65, 89);
+    height: 30px;
+}
+.login
+{
+    float: right;
+}
+.logo
+{
+    width: 80px;
+    height: 80px;
+    float:none;
+    float: clear;
+    bottom:0;
+}
+
+.labels
+{
+    color:black;
+}
+body
+{
+    background-color: rgb(34, 34, 34);
+    font-size: 1em;
+    font-family: verdana, sans-serif;
+    color: white;
+}
+#imgHolder
+{
+    border: 3px solid black;
+    height: 500px;
+    margin-bottom: 1%;
+}
+article
+{
+    border-top: 2px solid rgb(67, 69, 74);
+    border-bottom: 1px solid rgb(67, 69, 74);
+    margin-top: 0;
+    margin-bottom: 0;
+}
+footer
+{
+    background-color: rgb(34, 34, 34);
+    margin-top: 1%;
+}
+
+footer a
+{
+    display: block;
+    text-decoration: none;
+    color:white;
+}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+button {
+    display: none;
+    background-color: rgb(63, 90, 124);
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 0;
+    font-size: 1em;
+    margin-bottom: 2%;
+    width: 100%;
+    height: 40px;
+}
+
+button:hover 
+{
+    opacity: 0.8;
+    color:aquamarine;
+    background-color: rgb(45, 65, 89);
+
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: rgb(63, 90, 124);
+}
+
+/* Center the image and position the close button */
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+
+img.icon {
+  width: 300px;
+  border-radius: 50%;
+}
+
+.container {
+  padding: 16px;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  padding-top: 60px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)} 
+  to {-webkit-transform: scale(1)}
+}
+  
+@keyframes animatezoom {
+  from {transform: scale(0)} 
+  to {transform: scale(1)}
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn 
+    {
+     width: 100%;
+    
+  }
+}
+
+
+.download
+{
+    padding: 20px;
+    background-color: limegreen;
+    color:white;
+    display: block;
+    width: 120px;
+    margin-left: 40px;
+    padding-bottom: 40px;
+    margin-top: 20px;
+}
