@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Voxel Dunegons</title>
+        <meta name="Home" content="Home Page Voxel Dungeons game">
+        <link rel="stylesheet" href="voxelDungeons.css" type="text/css"> <!-- Links to external style sheet -->
+    </head>
+    <body>
+        <div id="sticky">
+            <nav>
+                <a class="active" href="voxelDungeonsHome.html" accesskey="h" >Home</a>
+                <a href="voxelDungeonsDownload.html" accesskey="d">Download</a>
+                <button class="login" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
+            </nav>
+        </div>
+        
+        <header>Voxel Dungeons</header>
+        
+        <article id="imgHolder">
+            <img src="VD.png" alt="In game image" style="height:inherit; width:100%; ">
+        </article>
+        <article>
+            <h2>What is Voxel Dungeons?</h2>
+            <p>Voxel Dungeons is a game originally conceptualised in the Game Development Society at the Preston Campus of the           University of Central Lancashire.</p>
+            <p>It is a Voxel-based game with RPG elements with features similar to that of Dungeons and Dragons. The intention for this project is to create a game that is similar to a cross between DND and early Maplestory but with a more complex stat system allowing for minimaxing and a strategic playstyle.</p>
+        </article>
+    
+        <article>
+            <h2>The team</h2>
+            <ul>
+                <li>Jack Grover</li>
+                <li>Matt Hamilton</li>
+                <li>Ben Canning</li>
+                <li>James</li>
+                <li>Tauheed</li>
+                <li>Jamie</li>
+                <li>Alex Kerr</li>
+            </ul>
+            <p>We are a team of 7 Computing students at the University of Central Lancashire in Preston, England. We come from many different backgrounds and have an amazing wealth of knowledge between us. The game idea itself is the brainchild of Jack Grover who pitched the idea to our friendship group. Those of us interested joined him and began working on parts of the game in which we had experience or that complemented our chosen course. </p>
+        </article>
+        
+        <footer>
+            <a href="Terms">Terms</a>
+            <a href="Privacy">Privacy</a>
+            <a href="Help">Help</a>
+        </footer>
+<div id="id01" class="modal">
+  
+  <form class="modal-content animate" action="/action_page.php" method="post">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="icon.png" alt="icon" class="icon">
+    </div>
+
+    <div class="container">
+      <label for="uname" class="labels"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" name="uname" required>
+
+      <label for="psw" class="labels"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" required>
+        
+      <button type="submit">Login</button>
+      <label class="labels">
+        <input type="checkbox" checked="checked" name="remember" > Remember me
+      </label>
+    </div>
+
+    <div class="container" style="background-color:#C0C0C0">
+      <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+      <span class="psw"><a href="#">Forgot password?</a></span>
+    </div>
+  </form>
+</div>
+
+<script>
+// Get the modal
+var modal = document.getElementById('id01');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
+    </body>
+</html>
