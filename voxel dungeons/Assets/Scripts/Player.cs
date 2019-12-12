@@ -21,17 +21,15 @@ public class Player : MonoBehaviour
 		None
 	}
 
-	public PlayerClasses playerClass = PlayerClasses.None;
+	public PlayerClasses playerClass = PlayerClasses.None; // players class is defaulted to None. at level 5 they choose their first class
 
 	public Stats playerStats;
 
-	// Start is called before the first frame update
     void Start()
     {
 		playerStats = new Stats(playerClass);
     }
 
-    // Update is called once per frame
     void Update()
     {
         

@@ -12,7 +12,13 @@ public class dialogueDemo : MonoBehaviour
     TalkQuest killtask;
     Quest killCylinder;
 
-    public Enemy target = null;
+
+
+
+
+    public Enemy Slime; 
+
+
 
     void Start()
     {
