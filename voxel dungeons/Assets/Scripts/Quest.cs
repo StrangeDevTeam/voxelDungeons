@@ -11,7 +11,7 @@ public class Quest
     public bool started = false; // becomes true when the quest has been given to the player
     public string title = "quest title";
     public string info = "quest info";
-    public List<QuestStep> steps = new List<QuestStep>(); //the different objectives of the quest
+    public List<QuestObjective> steps = new List<QuestObjective>(); //the different objectives of the quest
     //Item[] rewards = new Item[]; // the items given to the user on completion of the quest 
 
     /// <summary>
@@ -20,13 +20,13 @@ public class Quest
     /// <param name="pTitle">the title of the quest</param>
     /// <param name="pInfo">the information of the quest</param>
     /// <param name="pSteps"> the list of QuestSteps that are objectives for this quest</param>
-    public Quest(string pTitle, string pInfo, List<QuestStep> pSteps)
+    public Quest(string pTitle, string pInfo, List<QuestObjective> pSteps)
     {
         complete = false;
         title = pTitle;
         info = pInfo;
         steps = pSteps;
-        foreach (QuestStep step in pSteps)
+        foreach (QuestObjective step in pSteps)
         {
             step.attachParent(this);
         }
@@ -37,21 +37,21 @@ public class Quest
     /// <param name="pTitle">the title of the quest</param>
     /// <param name="pInfo">the information of the quest</param>
     /// <param name="pSteps"> the QuestStep that is an objective for this quest</param>
-    public Quest(string pTitle, string pInfo, QuestStep pSteps)
+    public Quest(string pTitle, string pInfo, QuestObjective pSteps)
     {
         complete = false;
         title = pTitle;
         info = pInfo;
-        List<QuestStep> tempList = new List<QuestStep>();
+        List<QuestObjective> tempList = new List<QuestObjective>();
         tempList.Add(pSteps);
         steps = tempList;
-        foreach (QuestStep step in tempList)
+        foreach (QuestObjective step in tempList)
         {
             step.attachParent(this);
         }
     }
 
-    public static KillQuest convertToKillQuest(QuestStep pQuest)
+    public static KillQuest convertToKillQuest(QuestObjective pQuest)
     {
         try
         {
@@ -63,14 +63,18 @@ public class Quest
             return null;
         }
     }
-    public static TalkQuest convertToTalkQuest(QuestStep pQuest){
+    public static TalkQuest convertToTalkQuest(QuestObjective pQuest)
+    {
+        Debug.Log("Attemoting to convert QuestStep to TalkQuest");
         try
         {
             TalkQuest temp = (TalkQuest)(pQuest);
+            Debug.Log("Success");
             return temp;
         }
         catch(Exception)
         {
+            Debug.Log("Failed");
             return null;
         }
     }
@@ -81,7 +85,7 @@ public class Quest
     public void UpdateQuestStatus()
     {
         bool isQuestComplete = true;
-        foreach(QuestStep step in steps)
+        foreach(QuestObjective step in steps)
         {
             if(step.stepComplete != true)
             {
@@ -102,21 +106,21 @@ public class Quest
     }
 }
 // referred to as "objectives" sometimes to elliviate confusion
-public class QuestStep
+public class QuestObjective
 {
     public Quest ParentQuest = null; // the Quest that this QuestStep is a part of
     public bool stepComplete = false; // true when this objective is complete
     public string title = "task title"; // the title of the objective
     public bool showTitle = true; // whether or not the title should show on the UI
-    public int ID = -1;
+    public int objectiveID = -1;
     public static int nextID = 0;
 
 
     
-    public QuestStep(string pTitle)
+    public QuestObjective(string pTitle)
     {
         title = pTitle;
-        ID= nextID;
+        objectiveID= nextID;
         nextID++;
     }
     //run when the Quest is created, attaches the parent Quest to these objectives
@@ -125,7 +129,7 @@ public class QuestStep
         ParentQuest = pParentQuest;
     }
 }
-public class KillQuest : QuestStep
+public class KillQuest : QuestObjective
 {
     public List<Enemy> targets = new List<Enemy>(); // the target or targets to be tracked for this killQuest
     public int killsNeeded = 1; // the amount of kills needed for completion
@@ -166,9 +170,9 @@ public class KillQuest : QuestStep
         }
     }
 }
-public class TalkQuest : QuestStep
+public class TalkQuest : QuestObjective
 {
-    public Dialogue questedDialogue;
+    public Dialogue questedDialogue; // the dialogue to run to complete the quest 
 
     public TalkQuest(string pTitle, Dialogue pQuestedDialogue)  : base(pTitle)
     {

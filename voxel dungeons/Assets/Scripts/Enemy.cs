@@ -59,7 +59,7 @@ public class Enemy : ScriptableObject
     /// </summary>
     /// <param name="pQuestStep">the Quest step to convert</param>
     /// <returns></returns>
-    KillQuest converttoKillQuest (QuestStep pQuestStep)
+    KillQuest converttoKillQuest (QuestObjective pQuestStep)
     {
         try
         {
