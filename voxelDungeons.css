@@ -135,6 +135,12 @@ button:hover
 
 }
 
+.reportBug a:hover
+{
+    color:aquamarine;
+    background-color: rgb(45, 65, 89);
+}
+
 /* Extra styles for the cancel button */
 .cancelbtn {
   width: auto;
@@ -238,8 +244,14 @@ span.psw {
     background-color: limegreen;
     color:white;
     display: block;
-    width: 120px;
+    width: 100px;
     margin-left: 40px;
-    padding-bottom: 40px;
     margin-top: 20px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.download:hover
+{
+    background-color: rgb(63, 90, 124);
 }
