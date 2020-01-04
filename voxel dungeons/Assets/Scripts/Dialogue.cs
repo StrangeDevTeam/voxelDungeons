@@ -230,7 +230,7 @@ public class Dialogue : MonoBehaviour
             TalkQuest activeTalkQuest = Quest.convertToTalkQuest(Quest.ActiveQuest.steps[i]);
             if( activeTalkQuest !=null)
             {
-                if(activeTalkQuest.ID == currentDialogue.ID)
+                if(activeTalkQuest.questedDialogue.ID == currentDialogue.ID)
                 {
                     activeTalkQuest.QuestedDialogueRun();
                 }
