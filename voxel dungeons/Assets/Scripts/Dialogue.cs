@@ -226,9 +226,9 @@ public class Dialogue : MonoBehaviour
     public void CheckForQuestDialogue()
     {
         //index through all quest objectives and if they can be converted to a TalkQuest, complete the quest
-        for(int i = 0; i< Quest.ActiveQuest.steps.Count ; i++ )
+        for(int i = 0; i< Quest.ActiveQuest.objectives.Count ; i++ )
         {
-            TalkQuest activeTalkQuest = Quest.convertToTalkQuest(Quest.ActiveQuest.steps[i]);
+            TalkQuest activeTalkQuest = Quest.convertToTalkQuest(Quest.ActiveQuest.objectives[i]);
             if( activeTalkQuest !=null)
             {
                 if(activeTalkQuest.questedDialogue.dialogueID == currentDialogue.dialogueID)

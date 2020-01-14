@@ -20,7 +20,7 @@ public class ItemDatabase : MonoBehaviour
             )
     };
 
-    public Item SearchDatabaseByID(int ID)
+    public static Item SearchDatabaseByID(int ID)
     {
         for(int i = 0; i < itemDatabase.Count; i++)
         {
@@ -32,7 +32,7 @@ public class ItemDatabase : MonoBehaviour
         return null;
     }
 
-    public Item SearchDatabaseByName(string Name)
+    public static Item SearchDatabaseByName(string Name)
     {
         for(int i = 0; i< itemDatabase.Count; i++)
         {

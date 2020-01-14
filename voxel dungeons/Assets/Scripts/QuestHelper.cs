@@ -42,7 +42,7 @@ public class QuestHelper : MonoBehaviour
 
         if (Quest.ActiveQuest != null)
         {
-            for (int i = 0; i < Quest.ActiveQuest.steps.Count; i++)
+            for (int i = 0; i < Quest.ActiveQuest.objectives.Count; i++)
             {
                 //creating the gameobject, and dealing with inheritence
                 GameObject newGO = new GameObject("Objective");
@@ -50,13 +50,13 @@ public class QuestHelper : MonoBehaviour
 
                 //text
                 Text newGOtext = newGO.AddComponent<Text>();
-                if (!Quest.ActiveQuest.steps[i].stepComplete)
+                if (!Quest.ActiveQuest.objectives[i].objectiveComplete)
                 {
-                    newGOtext.text = "- " + Quest.ActiveQuest.steps[i].title;
+                    newGOtext.text = "- " + Quest.ActiveQuest.objectives[i].title;
                 }
                 else
                 {
-                    newGOtext.text = "+ (Completed)   " + Quest.ActiveQuest.steps[i].title;
+                    newGOtext.text = "+ (Completed)   " + Quest.ActiveQuest.objectives[i].title;
                 }
                 newGOtext.verticalOverflow = VerticalWrapMode.Overflow;
                 

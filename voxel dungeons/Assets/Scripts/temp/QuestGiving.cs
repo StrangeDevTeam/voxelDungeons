@@ -24,6 +24,10 @@ public class QuestGiving : MonoBehaviour
 		string[] replies = new string[] { "Yes", "No, leave me be." };
 		Dialogue[] branches = new Dialogue[] { giveKillQuest, bye };
 		capsuleKillRequest = new DialogueChoice("Adventurer, I have a request to ask, help me will you?", replies, branches);
+
+
+        Item sword = ItemDatabase.SearchDatabaseByName("example item");
+        cubeKillQuest.setReward(sword);
         
 	
 	}
@@ -43,15 +47,22 @@ public class QuestGiving : MonoBehaviour
 	}
 
 	public void Use()
-	{	
-		if (!cubeKillQuest.complete)
-		{
-			capsuleKillRequest.ShowDialogue();
-		}
-		else
-		{
-			capsuleTalkRequest.ShowDialogue();
-		}
+	{
+        if (cubeKillQuest.complete && !cubeKillQuest.isTurnedIn)
+        {
+            cubeKillQuest.TurnInQuest();
+        }
+        else
+        {
+            if (!cubeKillQuest.complete)
+            {
+                capsuleKillRequest.ShowDialogue();
+            }
+            else
+            {
+                capsuleTalkRequest.ShowDialogue();
+            }
+        }
 	}
 
     // Update is called once per frame

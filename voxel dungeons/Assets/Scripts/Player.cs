@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    Inventory inv = new Inventory(); // create an inventory for the player
+    public static Inventory playerInv = new Inventory(); // create an inventory for the player
     
 
 	public enum PlayerClasses // this needs to be moved to another class. other entities can also have these classes
@@ -35,6 +35,9 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        
+        for(int i = 0; i< playerInv.inv.Count; i++)
+        {
+            Debug.Log(playerInv.inv[i].item.itemName);
+        }
     }
 }

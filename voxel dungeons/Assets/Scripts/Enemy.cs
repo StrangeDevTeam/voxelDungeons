@@ -37,9 +37,9 @@ public class Enemy : ScriptableObject
     {
         //if active quest is tracking kills of this enemy, increment the amount of this enemy killed
         Quest q = Quest.ActiveQuest;
-        for (int i = 0; i <q.steps.Count; i++)
+        for (int i = 0; i <q.objectives.Count; i++)
         {
-            KillQuest kq = converttoKillQuest(q.steps[i]);
+            KillQuest kq = converttoKillQuest(q.objectives[i]);
             if(kq != null)
             {
                 for(int j = 0; j < kq.targets.Count; j++)
