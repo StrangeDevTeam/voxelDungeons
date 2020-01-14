@@ -2,9 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemDatabase 
+public class ItemDatabase : MonoBehaviour
 {
-    public static List<Item> itemDatabase = new List<Item>();
+    public static List<Item> itemDatabase = new List<Item>()
+    { 
+        new Item
+            (
+            0,
+            "example item",
+            "this is an example item being added to the database",
+            10,
+            new Dictionary<string, int>
+            {
+                {"Useless", 10},
+                {"Example", 9000 }
+            }
+            )
+    };
 
     public Item SearchDatabaseByID(int ID)
     {

@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-	public enum PlayerClasses 
+    Inventory inv = new Inventory(); // create an inventory for the player
+    
+
+	public enum PlayerClasses // this needs to be moved to another class. other entities can also have these classes
 	{ 
 		Barbarian,
 		Bard,
