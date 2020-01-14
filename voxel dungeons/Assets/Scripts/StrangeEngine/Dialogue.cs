@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright(c) 2020 arcturus125 & StrangeDevTeam
+// Free to use and modify as you please, Not to be published, distributed, licenced or sold without permission from StrangeDevTeam
+// Requests for the above to be made here: https://www.reddit.com/r/StrangeDev/
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,7 +23,7 @@ public class Dialogue : MonoBehaviour
     [HideInInspector]
     public bool pauseForFrame = true; // stops the program from ruching ahead, when true the program will wait 1 frame before monitoring inputs
     [HideInInspector]
-    public int ID = -1;
+    public int dialogueID = -1;
     public Quest triggeredQuest = null; // the tuest to be triggered on this dialogue, if there is one
 
     void LateUpdate()
@@ -153,7 +157,7 @@ public class Dialogue : MonoBehaviour
     public Dialogue(string dialogueText)
     {
         text = dialogueText;
-        ID = nextID;
+        dialogueID = nextID;
         nextID++;
     }
     /// <summary>
@@ -165,7 +169,7 @@ public class Dialogue : MonoBehaviour
     {
         text = dialogueText;
         triggeredQuest = QuestLinkedToDialogue;
-        ID = nextID;
+        dialogueID = nextID;
         nextID++;
     }
     /// <summary>
@@ -177,7 +181,7 @@ public class Dialogue : MonoBehaviour
     {
         text = dialogueText;
         nextDialogue = linkedDialogue;
-        ID = nextID;
+        dialogueID = nextID;
         nextID++;
     }
     /// <summary>
@@ -191,7 +195,7 @@ public class Dialogue : MonoBehaviour
         text = dialogueText;
         nextDialogue = linkedDialogue;
         triggeredQuest = QuestLinkedToDialogue;
-        ID = nextID;
+        dialogueID = nextID;
         nextID++;
     }
 
@@ -219,19 +223,21 @@ public class Dialogue : MonoBehaviour
         {
             Quest.ActiveQuest = triggeredQuest;// TODO: add this into quest log (once implemented) instead of setting it to active
             Quest.ActiveQuest.started = true;
-            Debug.Log("Quest triggered: " + triggeredQuest.title);
+            Debug.Log("Quest triggered: " + triggeredQuest.title + "(set to active)");
         }
     }
 
     public void CheckForQuestDialogue()
     {
-        for(int i = 0; i< Quest.ActiveQuest.steps.Count ; i++ )
+        //index through all quest objectives and if they can be converted to a TalkQuest, complete the quest
+        for(int i = 0; i< Quest.ActiveQuest.objectives.Count ; i++ )
         {
-            TalkQuest activeTalkQuest = Quest.convertToTalkQuest(Quest.ActiveQuest.steps[i]);
+            TalkQuest activeTalkQuest = Quest.convertToTalkQuest(Quest.ActiveQuest.objectives[i]);
             if( activeTalkQuest !=null)
             {
-                if(activeTalkQuest.ID == currentDialogue.ID)
+                if(activeTalkQuest.questedDialogue.dialogueID == currentDialogue.dialogueID)
                 {
+                    Debug.Log("Quest match!");
                     activeTalkQuest.QuestedDialogueRun();
                 }
             }

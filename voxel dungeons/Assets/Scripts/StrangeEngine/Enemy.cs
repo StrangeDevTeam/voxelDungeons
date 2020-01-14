@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright(c) 2020 arcturus125 & StrangeDevTeam
+// Free to use and modify as you please, Not to be published, distributed, licenced or sold without permission from StrangeDevTeam
+// Requests for the above to be made here: https://www.reddit.com/r/StrangeDev/
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,9 +41,9 @@ public class Enemy : ScriptableObject
     {
         //if active quest is tracking kills of this enemy, increment the amount of this enemy killed
         Quest q = Quest.ActiveQuest;
-        for (int i = 0; i <q.steps.Count; i++)
+        for (int i = 0; i <q.objectives.Count; i++)
         {
-            KillQuest kq = converttoKillQuest(q.steps[i]);
+            KillQuest kq = converttoKillQuest(q.objectives[i]);
             if(kq != null)
             {
                 for(int j = 0; j < kq.targets.Count; j++)
@@ -59,7 +63,7 @@ public class Enemy : ScriptableObject
     /// </summary>
     /// <param name="pQuestStep">the Quest step to convert</param>
     /// <returns></returns>
-    KillQuest converttoKillQuest (QuestStep pQuestStep)
+    KillQuest converttoKillQuest (QuestObjective pQuestStep)
     {
         try
         {

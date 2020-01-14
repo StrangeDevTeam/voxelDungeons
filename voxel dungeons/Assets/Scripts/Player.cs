@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-	public enum PlayerClasses 
+    public static Inventory playerInv = new Inventory(); // create an inventory for the player
+    
+
+	public enum PlayerClasses // this needs to be moved to another class. other entities can also have these classes
 	{ 
 		Barbarian,
 		Bard,
@@ -21,19 +24,20 @@ public class Player : MonoBehaviour
 		None
 	}
 
-	public PlayerClasses playerClass = PlayerClasses.None;
+	public PlayerClasses playerClass = PlayerClasses.None; // players class is defaulted to None. at level 5 they choose their first class
 
 	public Stats playerStats;
 
-	// Start is called before the first frame update
     void Start()
     {
 		playerStats = new Stats(playerClass);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        for(int i = 0; i< playerInv.inv.Count; i++)
+        {
+            Debug.Log(playerInv.inv[i].item.itemName);
+        }
     }
 }
