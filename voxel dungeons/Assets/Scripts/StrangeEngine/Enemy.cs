@@ -40,17 +40,20 @@ public class Enemy : ScriptableObject
     void OnKill()
     {
         //if active quest is tracking kills of this enemy, increment the amount of this enemy killed
-        Quest q = Quest.ActiveQuest;
-        for (int i = 0; i <q.objectives.Count; i++)
+        Quest activeQuest = Quest.ActiveQuest;
+        if (activeQuest !=null)
         {
-            KillQuest kq = converttoKillQuest(q.objectives[i]);
-            if(kq != null)
+            for (int i = 0; i < activeQuest.objectives.Count; i++)
             {
-                for(int j = 0; j < kq.targets.Count; j++)
+                KillQuest kq = converttoKillQuest(activeQuest.objectives[i]);
+                if (kq != null)
                 {
-                    if (this == kq.targets[j])
+                    for (int j = 0; j < kq.targets.Count; j++)
                     {
-                        kq.TargetKilled();
+                        if (this == kq.targets[j])
+                        {
+                            kq.TargetKilled();
+                        }
                     }
                 }
             }

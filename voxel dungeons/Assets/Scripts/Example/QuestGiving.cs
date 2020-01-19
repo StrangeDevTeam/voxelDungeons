@@ -27,7 +27,18 @@ public class QuestGiving : MonoBehaviour
 
 
         Item sword = ItemDatabase.SearchDatabaseByName("example item");
+
+        Item shield = ItemDatabase.SearchDatabaseByID(1);
+
+
+
+
         cubeKillQuest.setReward(sword);
+
+
+
+        Item[] rewards = new Item[] { sword, shield };
+        cubeKillQuest.setRewards( rewards );
         
 	
 	}

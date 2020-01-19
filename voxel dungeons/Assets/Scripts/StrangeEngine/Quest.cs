@@ -10,6 +10,9 @@ using UnityEngine;
 public class Quest
 {
     public static Quest ActiveQuest = null;
+    public static List<Quest> openQuests = new List<Quest>(); // all quests ths user has obtained, but not completed go here
+    public static List<Quest> completedQuests = new List<Quest>(); // all completed quests go here
+    public static List<Quest> failedQuests = new List<Quest>(); // all failed quests go here
 
     public bool complete = false; // becomes true when all steps of the quest are complete
     public bool started = false; // becomes true when the quest has been given to the player
@@ -118,6 +121,7 @@ public class Quest
         if (!isTurnedIn)
         {
             GiveRewards();
+            ActiveQuest = null;
             Debug.Log("Quest " + title + " turned in!");
         }
         else
