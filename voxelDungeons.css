@@ -44,7 +44,8 @@ nav a
 
 a:hover
 {
-    color:aquamarine;
+    color:#EFA43B;
+    background-color: rgb(45, 65, 89)
     
 }
 
@@ -135,9 +136,9 @@ button:hover
 
 }
 
-.reportBug a:hover
+.reportBug:hover
 {
-    color:aquamarine;
+    color:#EFA43B;
     background-color: rgb(45, 65, 89);
 }
 
