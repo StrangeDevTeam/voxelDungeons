@@ -13,4 +13,8 @@ MonoBehaviour:
   m_Name: Test
   m_EditorClassIdentifier: 
   health: 0
-  name: geoff
+  enemyName: 
+  enemyDrops:
+  - ItemID: 0
+    DropChance: 1
+    AmountToDrop: 1

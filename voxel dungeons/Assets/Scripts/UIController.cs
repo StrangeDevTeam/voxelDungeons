@@ -30,8 +30,6 @@ public class UIController : MonoBehaviour
 
         QuestHelperPanel = GameObject.Find("QuestHelperPanel");
         QuestHelperPanel.SetActive(false);
-
-        ShowQuestHelper();
     }
     
 
@@ -41,6 +39,14 @@ public class UIController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             ToggleMenus();
+        }
+        if(Quest.ActiveQuest != null)
+        {
+            QuestHelperPanel.SetActive(true);
+        }
+        else
+        {
+            QuestHelperPanel.SetActive(false);
         }
     }
 

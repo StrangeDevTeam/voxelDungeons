@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465782, g: 0.49641252, b: 0.5748167, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -72,7 +72,7 @@ LightmapSettings:
     m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
-    m_BakeBackend: 2
+    m_BakeBackend: 1
     m_PVRSampling: 1
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 256
@@ -96,7 +96,8 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 5b531e0b659592048bb86c08485d2ff0,
+    type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
@@ -1145,6 +1146,7 @@ GameObject:
   - component: {fileID: 378422061}
   - component: {fileID: 378422062}
   - component: {fileID: 378422066}
+  - component: {fileID: 378422067}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1300,6 +1302,19 @@ MonoBehaviour:
   nextDialogue: {fileID: 0}
   pauseForFrame: 0
   dialogueID: 0
+--- !u!114 &378422067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378422058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ee2966e7bdfd4a449f529c5f28c31d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerClass: 12
 --- !u!1001 &379379499
 PrefabInstance:
   m_ObjectHideFlags: 0
