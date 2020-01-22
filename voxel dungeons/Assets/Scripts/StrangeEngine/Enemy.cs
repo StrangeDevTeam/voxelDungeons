@@ -12,6 +12,7 @@ public class Enemy : ScriptableObject
 {
     public int health = 100;
     public string enemyName = "geoff";
+    public Spoils[] enemyDrops;
 
     /// <summary>
     /// create an enemy with a name and health
@@ -78,4 +79,13 @@ public class Enemy : ScriptableObject
             return null;
         }
     }
+}
+[Serializable]
+public class Spoils
+{
+    public int ItemID;
+
+    [Header("0 = 0% chance, 1 = 100% chance")]
+    public float DropChance;
+    public int AmountToDrop;
 }

@@ -22,9 +22,9 @@ public class Dice : MonoBehaviour
             for(int i = 0; i < numberOfDice; i++)
             {
                 int randomNumber = (int)(Random.Range(1, numberOfSides +1 ));
-                if(randomNumber > 20)
+                if(randomNumber > numberOfSides)
                 {
-                    randomNumber = 20;
+                    randomNumber = numberOfSides;
                 }
                 total += randomNumber;
             }

@@ -24,5 +24,21 @@ public class EnemyComponent : MonoBehaviour
     {
         Destroy(this.gameObject);
         PlayerInteraction.previousColliders.Remove(this.gameObject.GetComponent<Collider>());
+        Spoils();
+    }
+    void Spoils()
+    {
+        Spoils[] enemyDrops = enemyReference.enemyDrops;
+        foreach(Spoils DropInstance in enemyDrops)
+        {
+            Item itemDrop = ItemDatabase.SearchDatabaseByID(DropInstance.ItemID);
+            if(DropInstance.DropChance*100 > Dice.Roll("1d100"))
+            {
+                for(int i = 0; i< DropInstance.AmountToDrop;i++)
+                {
+                    Player.playerInv.AddItem(itemDrop);
+                }
+            }
+        }
     }
 }
